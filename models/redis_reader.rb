@@ -2,7 +2,7 @@ class RedisReader
   attr_accessor :redis
 
   def initialize
-    @redis = Redis.new
+    self.redis = AppConfig::Redis.connection
   end
 
   def dump
@@ -15,7 +15,6 @@ class RedisReader
   end
 
   def get(key, type)
-    puts "key: #{key} type: #{type}"
     case type.to_sym
     when :hash
       redis.hgetall(key)
@@ -30,6 +29,5 @@ class RedisReader
     else
       raise 'Unknown type'
     end
-
   end
 end
