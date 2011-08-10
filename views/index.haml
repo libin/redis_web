@@ -1,0 +1,12 @@
+%h1 Redis Dump
+
+%table
+  %th Keys
+  %th Type
+  %th Value
+
+  - @redis_dump.each do |row|
+    %tr
+      %td= row[:key]
+      %td= row[:type]
+      %td= row[:value]
