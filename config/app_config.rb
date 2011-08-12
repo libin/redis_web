@@ -1,9 +1,10 @@
 module AppConfig
+  def self.root
+    APP_ROOT
+  end
+
   module Redis
-    OPTIONS = {
-      :host => 'localhost',
-      :port => 6379
-    }
+    OPTIONS = YAML::load(File.open(File.join(APP_ROOT, 'config', 'redis.yml')))
 
     def self.connection
       @redis ||= ::Redis.new(OPTIONS)

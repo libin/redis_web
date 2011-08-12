@@ -7,8 +7,7 @@ helpers do
 end
 
 get '/' do
-  redis_reader = RedisReader.new
-  @redis_dump = redis_reader.dump
+  @redis_dump = RedisReader.dump
   haml :"index"
 end
 

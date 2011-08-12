@@ -28,4 +28,4 @@ end
 BootLoader.load_files([File.join(APP_ROOT, 'config', 'app_config')])
 
 # Load models
-BootLoader.glob_and_load('models')
+BootLoader.glob_and_load('lib')
