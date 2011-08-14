@@ -3,10 +3,10 @@ module AppConfig
     APP_ROOT
   end
 
-  module Redis
+  class Redis
     OPTIONS = YAML::load(File.open(File.join(APP_ROOT, 'config', 'redis.yml')))
 
-    def self.connection
+    def self.instance
       @redis ||= ::Redis.new(OPTIONS)
     end
   end

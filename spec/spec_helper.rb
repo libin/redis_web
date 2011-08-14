@@ -5,7 +5,7 @@ RSpec.configure do |config|
   REDIS_PID = "#{AppConfig.root}/tmp/redis-test.pid"
 
   config.before(:each) do
-    RedisReader.redis.keys.each{|k| RedisReader.redis.del(k)}
+    RedisAbstractor.redis.keys.each{|k| RedisAbstractor.redis.del(k)}
   end
 
   config.before(:suite) do
