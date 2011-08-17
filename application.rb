@@ -4,11 +4,31 @@ configure do
 end
 
 helpers do
+  def link_to(url, text, link_class = nil, title=nil)
+    "<a href=#{url} class=#{link_class} title=#{title}>#{text}</a>"
+  end
+
+  def delete_key_path(key)
+    "/redis/delete/#{key}"
+  end
+
+  def redirect_back
+    redirect request.referrer || '/'
+  end
+
+  def partial(page, options={})
+    haml page.to_sym, options.merge!(:layout => false)
+  end
 end
 
 get '/' do
-  @redis_dump = RedisReader.dump
+  @redis_content = RedisAbstractor.get(RedisAbstractor.keys)
   haml :"index"
+end
+
+delete '/redis/delete/:key' do
+  RedisAbstractor.del(params[:key])
+  redirect_back
 end
 
 get '/stylesheets/*.css' do

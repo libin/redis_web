@@ -39,4 +39,13 @@ describe RedisAbstractor do
       result.should include({'key' => 'hsh', 'type' => 'hash', 'value' => {'foo' => 'bar'}})
     end
   end
+
+  describe '.del' do
+    it 'deletes the key' do
+      RedisAbstractor.redis.set('foo', 'bar')
+      RedisAbstractor.keys.size.should == 1
+      RedisAbstractor.del('foo')
+      RedisAbstractor.keys.size.should == 0
+    end
+  end
 end

@@ -14,4 +14,8 @@ class RedisAbstractor
       {'key' => key, 'type' => type, 'value' => value}
     end
   end
+
+  def self.del(key)
+    redis.del(key)
+  end
 end
