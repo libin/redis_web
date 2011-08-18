@@ -1,3 +1,4 @@
+ENV['RUBY_ENV'] = 'test'
 require File.join(File.dirname(__FILE__), '..', 'config', 'boot')
 Sinatra::Application.environment = :test
 
@@ -12,7 +13,7 @@ RSpec.configure do |config|
     redis_options = {
       "daemonize"     => 'yes',
       "pidfile"       => REDIS_PID,
-      "port"          => 6379,
+      "port"          => 6380,
       "timeout"       => 300,
       "dbfilename"    => "dump.rdb",
       "loglevel"      => "debug",

@@ -4,7 +4,11 @@ module AppConfig
   end
 
   class Redis
-    OPTIONS = YAML::load(File.open(File.join(APP_ROOT, 'config', 'redis.yml')))
+    if ENV['RUBY_ENV'] == 'test'
+      OPTIONS = {:host => 'localhost', :port => 6380}
+    else
+      OPTIONS = YAML::load(File.open(File.join(APP_ROOT, 'config', 'redis.yml')))
+    end
 
     def self.instance
       @redis ||= ::Redis.new(OPTIONS)
