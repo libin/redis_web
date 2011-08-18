@@ -1,0 +1,33 @@
+#redis {
+  .row {
+    height: 18px;
+    min-height: 18px;
+    overflow: hidden;
+    &:hover {
+      background: #C9FFD1;
+    }
+    .actions {
+      vertical-align: top;
+      width: 5%;
+      display: inline-block;
+    }
+    .keys {
+      vertical-align: top;
+      width: 35%;
+      display: inline-block;
+    }
+    .types {
+      vertical-align: top;
+      width: 5%;
+      display: inline-block;
+    }
+    .values {
+      width: 50%;
+      display: inline-block;
+
+      .value {
+        display: inline-block;
+      }
+    }
+  }
+}

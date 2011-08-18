@@ -1,14 +1,11 @@
-%h1 Redis Dump
-
-%table
-  %th Action
-  %th Keys
-  %th Type
-  %th Value
-
+#redis
   - @redis_content.each do |row|
-    %tr
-      %td= link_to delete_key_path(row['key']), 'delete', 'delete'
-      %td= row['key']
-      %td= row['type']
-      %td= partial "values/#{row['type']}", :locals => {:value => row['value']}
+    .row
+      .actions
+        = link_to delete_key_path(row['key']), 'delete', 'delete'
+      .keys
+        = row['key']
+      .types
+        = row['type']
+      .values
+        = partial "values/#{row['type']}", :locals => {:value => row['value']}
