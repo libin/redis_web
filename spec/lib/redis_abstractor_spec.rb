@@ -35,8 +35,8 @@ describe RedisAbstractor do
     it 'returns the keys, types, and values' do
       result = RedisAbstractor.get(['str', 'hsh'])
       result.size.should == 2
-      result.should include({'key' => 'str', 'type' => 'string', 'value' => 'bar'})
-      result.should include({'key' => 'hsh', 'type' => 'hash', 'value' => {'foo' => 'bar'}})
+      result.should include({'key' => 'str', 'ttl' => nil, 'type' => 'string', 'value' => 'bar'})
+      result.should include({'key' => 'hsh', 'ttl' => nil, 'type' => 'hash', 'value' => {'foo' => 'bar'}})
     end
   end
 

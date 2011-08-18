@@ -11,6 +11,11 @@ class RedisCommand
     self.send(type, key)
   end
 
+  def self.ttl(key)
+    time = redis.ttl(key)
+    time < 0 ? nil : time
+  end
+
   def self.hash(key)
     redis.hgetall key
   end

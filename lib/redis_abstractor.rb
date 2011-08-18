@@ -9,9 +9,10 @@ class RedisAbstractor
 
   def self.get(keys)
     keys.collect do |key|
-      type = RedisCommand.type(key)
+      type  = RedisCommand.type(key)
       value = RedisCommand.get(type, key)
-      {'key' => key, 'type' => type, 'value' => value}
+      ttl   = RedisCommand.ttl(key)
+      {'key' => key, 'ttl' => ttl, 'type' => type, 'value' => value}
     end
   end
 

@@ -108,4 +108,21 @@ describe RedisCommand do
       end
     end
   end
+
+  describe '.ttl' do
+    context 'no ttl' do
+      it 'returns nil' do
+        RedisCommand.redis.set('foo', 'bar')
+        RedisCommand.ttl('foo').should be_nil
+      end
+    end
+
+    context 'with ttl' do
+      it 'returns the ttl' do
+        RedisCommand.redis.set('foo', 'bar')
+        RedisCommand.redis.expire('foo', 10)
+        RedisCommand.ttl('foo').should == 10
+      end
+    end
+  end
 end
