@@ -1,10 +1,19 @@
+.redis_header.row
+  .actions
+  .key Key
+  .type Type
+  .ttl TTL
+  .values Value
+
 - redis_content.each do |row|
   %div{:id => row['key'], :class => 'row'}
     .actions
       = link_to(delete_key_path(row['key']), image_tag('delete_small.png'), 'delete', 'delete')
-    .keys
+    .key
       = row['key']
-    .types
+    .type
       = row['type']
+    .ttl
+      = row['ttl'] || '--'
     .values
       = partial "values/#{row['type']}", :locals => {:value => row['value']}

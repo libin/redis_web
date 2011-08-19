@@ -6,23 +6,31 @@
     &:hover {
       background: #DEDEDE;
     }
+    &.redis_header {
+      font-weight: bold;
+    }
     .actions {
       vertical-align: top;
       width: 5%;
       display: inline-block;
     }
-    .keys {
+    .key {
       vertical-align: top;
       width: 35%;
       display: inline-block;
     }
-    .types {
+    .type {
+      vertical-align: top;
+      width: 5%;
+      display: inline-block;
+    }
+    .ttl {
       vertical-align: top;
       width: 5%;
       display: inline-block;
     }
     .values {
-      width: 50%;
+      width: 45%;
       height: 16px;
       overflow: hidden;
       display: inline-block;

@@ -16,22 +16,24 @@ $ ->
       data:
         '_method': 'delete'
 
-  $('a.live_poll').live 'click', (e) ->
+  intervalId = null
+  $('a.poll').live 'click', (e) ->
     e.preventDefault()
-    $(this).removeClass('live_poll')
-    $(this).text('polling...')
-    poll()
-
-  poll= ->
-    setTimeout(poller, 2000)
+    if intervalId?
+      $(this).text('live poll')
+      clearInterval intervalId
+      intervalId = null
+    else
+      $(this).text('polling...')
+      intervalId = setInterval(poller, 2000)
 
   poller= ->
+    url = window.location.href
     $.ajax
-      url: '/'
+      url: url
       type: 'get'
       dataType: 'html'
       success: poll_success
 
   poll_success= (data) ->
     $('#redis').html(data)
-    poll()
