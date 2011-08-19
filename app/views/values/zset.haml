@@ -1,2 +1,2 @@
 - value.each do |val|
-  .value= val['value']
+  %span{:class => 'value', :title => "score: #{val['score']}"}= val['value']
