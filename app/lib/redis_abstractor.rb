@@ -3,8 +3,8 @@ class RedisAbstractor
     AppConfig::Redis.instance
   end
 
-  def self.keys
-    redis.keys
+  def self.keys(pattern='*')
+    redis.keys(pattern)
   end
 
   def self.get(keys)

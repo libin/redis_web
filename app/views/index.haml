@@ -1,3 +1,8 @@
+%form{:action => '/search', :method => 'get'}
+  %input{:type => 'text', :name => 'q'}
+  %input{:type => 'submit', :value => 'Search'}
+
+= link_to '#', 'live poll', 'poll'
+
 #redis
   = partial('redis_content', :locals => {:redis_content => @redis_content})
-= link_to '#', 'live poll', 'live_poll'
