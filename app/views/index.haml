@@ -1,11 +1,3 @@
 #redis
-  - @redis_content.each do |row|
-    .row
-      .actions
-        = link_to delete_key_path(row['key']), 'delete', 'delete'
-      .keys
-        = row['key']
-      .types
-        = row['type']
-      .values
-        = partial "values/#{row['type']}", :locals => {:value => row['value']}
+  = partial('redis_content', :locals => {:redis_content => @redis_content})
+= link_to '#', 'live poll', 'live_poll'

@@ -1,7 +1,11 @@
 class RedisWeb < Sinatra::Base
   get '/' do
     @redis_content = RedisAbstractor.get(RedisAbstractor.keys)
-    haml :"index"
+    if request.xhr?
+      partial('redis_content', :locals => {:redis_content => @redis_content})
+    else
+      haml :"index", :layout => !request.xhr?
+    end
   end
 
   delete '/redis/:key' do

@@ -1,0 +1,10 @@
+- redis_content.each do |row|
+  %div{:id => row['key'], :class => 'row'}
+    .actions
+      = link_to(delete_key_path(row['key']), image_tag('delete_small.png'), 'delete', 'delete')
+    .keys
+      = row['key']
+    .types
+      = row['type']
+    .values
+      = partial "values/#{row['type']}", :locals => {:value => row['value']}

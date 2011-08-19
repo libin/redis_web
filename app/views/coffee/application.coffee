@@ -1,25 +1,37 @@
 $ ->
-  $('#redis .row .values').click (e) ->
-    row = $(this).closest('.row')
-    if row.data('expanded')
-      row.removeData('expanded')
-      $(this).children('.value').css('display', 'inline-block')
-      row.css('height', '18px')
-    else
-      row.data('expanded')
-      console.log row.data('expanded', true)
-      $(this).children('.value').css('display', 'block')
-      row.css('height', 'auto')
+  $('#redis .row').live 'click', (e) ->
+    $row = $(this)
+    height = 18
+    $row.toggleClass('expanded')
 
-  $('a.delete').click (e) ->
+  $('a.delete').live 'click', (e) ->
     e.preventDefault()
     url = $(this).attr('href')
     $row = $(this).closest('.row')
-    $row.hide('blinds')
-    $row.remove()
+    $row.hide('blind').remove()
     $.ajax
-      url: url
-      type: 'post'
+      url:      url
+      type:     'post'
       dataType: 'json'
       data:
         '_method': 'delete'
+
+  $('a.live_poll').live 'click', (e) ->
+    e.preventDefault()
+    $(this).removeClass('live_poll')
+    $(this).text('polling...')
+    poll()
+
+  poll= ->
+    setTimeout(poller, 2000)
+
+  poller= ->
+    $.ajax
+      url: '/'
+      type: 'get'
+      dataType: 'html'
+      success: poll_success
+
+  poll_success= (data) ->
+    $('#redis').html(data)
+    poll()

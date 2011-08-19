@@ -4,6 +4,10 @@ class RedisWeb < Sinatra::Base
       "<a href=#{url} class=#{link_class} title=#{title}>#{text}</a>"
     end
 
+    def image_tag(image_path)
+      "<img src='/images/#{image_path}' />"
+    end
+
     def delete_key_path(key)
       "/redis/#{key}"
     end

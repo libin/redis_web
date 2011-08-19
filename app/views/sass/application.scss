@@ -1,10 +1,10 @@
 #redis {
   .row {
-    height: 18px;
-    min-height: 18px;
-    overflow: hidden;
+    padding: 1px 0;
+    height: 20px;
+    min-height: 20px;
     &:hover {
-      background: #C9FFD1;
+      background: #DEDEDE;
     }
     .actions {
       vertical-align: top;
@@ -23,10 +23,25 @@
     }
     .values {
       width: 50%;
+      height: 16px;
+      overflow: hidden;
       display: inline-block;
 
       .value {
         display: inline-block;
+        &:hover {
+          background: #999999;
+        }
+      }
+    }
+    &.expanded {
+      height: auto;
+      .values {
+        height: auto;
+        word-wrap: break-word;
+        .value {
+          display: block;
+        }
       }
     }
   }
