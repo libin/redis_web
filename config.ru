@@ -1,4 +1,4 @@
 require File.dirname(__FILE__) + '/config/boot'
 
-require './application'
-run Sinatra::Application
+require './app/redis_web'
+run RedisWeb

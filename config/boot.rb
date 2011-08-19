@@ -16,7 +16,7 @@ module BootLoader
   end
 
   def self.glob_for(relative_path)
-    Dir.glob(File.join(APP_ROOT, relative_path, '**/*.rb'))
+    Dir.glob(File.join(APP_ROOT, relative_path, '/**/*.rb'))
   end
 
   def self.glob_and_load(relative_path)
@@ -26,6 +26,7 @@ end
 
 # Load configs
 BootLoader.load_files([File.join(APP_ROOT, 'config', 'app_config')])
+BootLoader.glob_and_load('config')
 
-# Load models
-BootLoader.glob_and_load('lib')
+# Load application
+BootLoader.glob_and_load('app')
