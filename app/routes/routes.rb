@@ -9,7 +9,7 @@ class RedisWeb < Sinatra::Base
   end
 
   get '/search' do
-    @redis_content = RedisAbstractor.get(RedisAbstractor.keys(params[:q]))
+    @redis_content = RedisAbstractor.get(RedisAbstractor.keys("*#{params[:q]}*"))
     if request.xhr?
       partial('redis_content', :locals => {:redis_content => @redis_content})
     else
