@@ -15,13 +15,25 @@ describe RedisAbstractor do
     end
 
     context 'keys' do
-      it 'returns the keys in redis' do
-        RedisAbstractor.redis.set('foo', 'foo')
-        RedisAbstractor.redis.set('bar', 'bar')
-        keys = RedisAbstractor.keys
-        keys.size.should == 2
-        keys.should include 'foo'
-        keys.should include 'bar'
+      context 'no args' do
+        it 'returns the keys in redis' do
+          RedisAbstractor.redis.set('foo', 'foo')
+          RedisAbstractor.redis.set('bar', 'bar')
+          keys = RedisAbstractor.keys
+          keys.size.should == 2
+          keys.should include 'foo'
+          keys.should include 'bar'
+        end
+      end
+
+      context 'pattern' do
+        it 'returns the keys that match the pattern' do
+          RedisAbstractor.redis.set('foo', 'foo')
+          RedisAbstractor.redis.set('bar', 'bar')
+          keys = RedisAbstractor.keys('fo*')
+          keys.size.should == 1
+          keys.should include 'foo'
+        end
       end
     end
   end
