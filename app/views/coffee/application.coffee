@@ -1,9 +1,4 @@
 $ ->
-  $('#redis .row').live 'click', (e) ->
-    $row = $(this)
-    height = 18
-    $row.toggleClass('expanded')
-
   $('a.delete').live 'click', (e) ->
     e.preventDefault()
     url = $(this).attr('href')
@@ -15,6 +10,22 @@ $ ->
       dataType: 'json'
       data:
         '_method': 'delete'
+
+  $('a.toggle_expand').live 'click', (e) ->
+    e.preventDefault()
+    $img = $(this).find('img')
+    $row = $(this).closest('.row')
+    $row.toggleClass('expanded')
+    if $row.hasClass('expanded')
+      $img.attr('src', '/images/expanded.png')
+    else
+      $img.attr('src', '/images/collapsed.png')
+
+  $('form a.clear').click (e) ->
+    e.preventDefault()
+    $input = $(this).closest('form').find('input:text')
+    $input.val('')
+    $(this).closest('form').submit()
 
   intervalId = null
   $('a.poll').live 'click', (e) ->

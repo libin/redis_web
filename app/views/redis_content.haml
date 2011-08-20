@@ -9,6 +9,7 @@
   %div{:id => row['key'], :class => 'row'}
     .actions
       = link_to(delete_key_path(row['key']), image_tag('delete_small.png'), 'delete', 'delete')
+      = link_to('#', image_tag('collapsed.png'), 'toggle_expand', 'expand')
     .key
       = row['key']
     .type
