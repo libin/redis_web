@@ -3,6 +3,15 @@
   %input{:type => 'submit', :value => 'Search'}
   = link_to '#', 'clear', 'clear'
 
+%form{:action => '/redis', :method => 'post'}
+  %input{:type => 'hidden', :name => '_method', :value => 'put'}
+  %label
+    Change Database
+    -selected = AppConfig::Redis.options[:db].to_i
+    %select{:name => 'db', :class => 'db'}
+      - 10.times do |i|
+        %option{:value => i, :selected => (selected == i)}= i
+
 = link_to '#', 'live poll', 'poll'
 
 #redis

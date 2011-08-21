@@ -17,6 +17,12 @@ class RedisWeb < Sinatra::Base
     end
   end
 
+  put '/redis' do
+    AppConfig::Redis.options.merge!({:db => params[:db]})
+    AppConfig::Redis.refresh
+    redirect_back
+  end
+
   delete '/redis/:key' do
     content_type :json
     RedisAbstractor.del(params[:key])

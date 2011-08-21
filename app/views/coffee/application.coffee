@@ -27,6 +27,9 @@ $ ->
     $input.val('')
     $(this).closest('form').submit()
 
+  $('select.db').change (e) ->
+    $(this).closest('form').submit()
+
   intervalId = null
   $('a.poll').live 'click', (e) ->
     e.preventDefault()
