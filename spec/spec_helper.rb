@@ -6,28 +6,20 @@ RSpec.configure do |config|
   REDIS_PID = "#{AppConfig.root}/tmp/redis-test.pid"
 
   config.before(:each) do
-    RedisAbstractor.redis.keys.each{|k| RedisAbstractor.redis.del(k)}
+    RedisAbstractor.redis.flushdb
   end
 
   config.before(:suite) do
     redis_options = {
       "daemonize"     => 'yes',
-      "pidfile"       => REDIS_PID,
       "port"          => 6380,
       "timeout"       => 300,
-      "dbfilename"    => "dump.rdb",
-      "loglevel"      => "debug",
-      "logfile"       => "stdout",
-      "databases"     => 16
+      "databases"     => 1,
     }.map { |k, v| "#{k} #{v}" }.join('\n')
     `echo '#{redis_options}' | redis-server -`
   end
 
   config.after(:suite) do
-    if File.exist? REDIS_PID
-      pid = File.read(REDIS_PID)
-      %x(kill #{pid})
-      FileUtils.rm_f(REDIS_PID)
-    end
+    %x(redis-cli -p 6380 shutdown)
   end
 end
