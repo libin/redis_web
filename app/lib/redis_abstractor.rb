@@ -16,6 +16,12 @@ class RedisAbstractor
     end
   end
 
+  def self.get_value(key)
+    type  = RedisCommand.type(key)
+    value = RedisCommand.get_all(type, key)
+    {'key' => key, 'type' => type, 'value' => value}
+  end
+
   def self.del(key)
     redis.del(key)
   end

@@ -15,4 +15,52 @@
 = link_to '#', 'live poll', 'poll'
 
 #redis
-  = partial('redis_content', :locals => {:redis_content => @redis_content})
+  .redis_header.row
+    .actions
+    .key Key
+    .type Type
+    .ttl TTL
+    .values Value
+
+.templates{:style => 'display: none;'}
+  %script#row_template{:type => 'text/x-jquery-tmpl'}
+    .row{'data-key' => '${key}'}
+      .actions
+        = link_to('/redis/${key}', image_tag('delete_small.png'), 'delete', 'delete')
+        = link_to('#', image_tag('collapsed.png'), 'toggle_expand', 'expand')
+      .key
+        = "${key}"
+      .type
+        = "${type}"
+      .ttl
+        = "${ttl}"
+      .values
+        = "${value}"
+  -# .string
+  %script#list_template{:type => 'text/x-jquery-templ'}
+    ="{{each value}}"
+    .value
+      ="${$value}"
+    ="{{/each}}"
+
+  %script#set_template{:type => 'text/x-jquery-templ'}
+    ="{{each value}}"
+    .value
+      ="${$value}"
+    ="{{/each}}"
+
+  %script#zset_template{:type => 'text/x-jquery-templ'}
+    ="{{each value}}"
+    .value{:title => "${$value.score}"}
+      ="${$value.value}"
+    ="{{/each}}"
+
+  %script#hash_template{:type => 'text/x-jquery-templ'}
+    ="{{each value}}"
+    .value
+      ="${$value}"
+    ="{{/each}}"
+
+  %script#string_template{:type => 'text/x-jquery-templ'}
+    .value
+      ="${value}"

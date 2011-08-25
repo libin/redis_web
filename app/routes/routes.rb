@@ -1,20 +1,22 @@
 class RedisWeb < Sinatra::Base
   get '/' do
-    @redis_content = RedisAbstractor.get(RedisAbstractor.keys)
     if request.xhr?
-      partial('redis_content', :locals => {:redis_content => @redis_content})
+      RedisAbstractor.get(RedisAbstractor.keys).to_json
     else
       haml :index
     end
   end
 
   get '/search' do
-    @redis_content = RedisAbstractor.get(RedisAbstractor.keys("*#{params[:q]}*"))
     if request.xhr?
-      partial('redis_content', :locals => {:redis_content => @redis_content})
+      RedisAbstractor.get(RedisAbstractor.keys("*#{params[:q]}*"))
     else
       haml :index
     end
+  end
+
+  get '/redis/:key' do
+    RedisAbstractor.get_value(params[:key]).to_json
   end
 
   put '/redis' do
