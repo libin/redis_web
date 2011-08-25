@@ -67,14 +67,14 @@ $ ->
     $.ajax
       url: window.location.hash
       type: 'get'
-      dataType: 'html'
+      dataType: 'json'
       success: poll_success
 
   poll_success = (data) ->
     diff.update(data)
-    # render_new(diff.added_items)
-    # remove_deleted(diff.deleted_keys)
-    # update_modified(diff.modified_items)
+    render_new(diff.added_items())
+    remove_deleted(diff.deleted_keys())
+    update_modified(diff.modified_items())
 
   render_new = (data) ->
     _.each data, (item) ->
@@ -87,4 +87,4 @@ $ ->
   update_modified = (data) ->
     _.each data, (item) ->
       $row = $(".row[data-key='#{item.key}']")
-      $row.replace($('#row_template').tmpl(item).appendTo('#redis'))
+      $row.replaceWith($('#row_template').tmpl(item))

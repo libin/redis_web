@@ -9,7 +9,7 @@ class RedisWeb < Sinatra::Base
 
   get '/search' do
     if request.xhr?
-      RedisAbstractor.get(RedisAbstractor.keys("*#{params[:q]}*"))
+      RedisAbstractor.get(RedisAbstractor.keys("*#{params[:q]}*")).to_json
     else
       haml :index
     end
