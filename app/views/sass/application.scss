@@ -2,6 +2,12 @@ body {
   text-align: left;
 }
 
+#spinner {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 #redis {
   .row {
     padding: 1px 0;

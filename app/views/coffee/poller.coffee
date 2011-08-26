@@ -1,16 +1,17 @@
 $ ->
-  intervalId = null
+  interval_id = null
 
   $('a.poll').live 'click', (e) ->
     e.preventDefault()
-    if intervalId?
+    if interval_id?
       $(this).text('live poll')
-      clearInterval intervalId
-      intervalId = null
+      clearInterval(interval_id)
+      interval_id = null
+      $('#spinner').spin('stop')
     else
       $(this).text('polling...')
-      intervalId = setInterval(poll, 2000)
-      # spinner?
+      interval_id = setInterval(poll, 2000)
+      $('#spinner').spin()
 
   poll = ->
     $.ajax
