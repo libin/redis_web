@@ -16,9 +16,9 @@ $ ->
     $row = $(this).closest('.row')
     $row.toggleClass('expanded')
     if $row.hasClass('expanded')
-      expand_row()
+      expand_row($row)
     else
-      collapse_row()
+      collapse_row($row)
 
   $('form a.clear').click (e) ->
     e.preventDefault()
@@ -28,17 +28,16 @@ $ ->
     $(this).closest('form').submit()
 
   collapse_row= ($row) ->
-    $img = $(this).find('img')
+    $img = $row.find('a.toggle_expand img')
     $img.attr('src', '/images/collapsed.png')
     value = $row.find(".values .value:first").text()
     $row.find(".values").html(value)
 
   expand_row= ($row) ->
-    $img = $(this).find('img')
+    $img = $row.find('a.toggle_expand img')
     $img.attr('src', '/images/expanded.png')
     $.ajax
       url: "/redis/#{$row.data('key')}"
       type: 'get'
       dataType: 'json'
       success: renderer.render_value
-
