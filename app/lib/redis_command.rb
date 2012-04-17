@@ -21,9 +21,7 @@ class RedisCommand
   end
 
   def self.hash(key)
-    key = redis.hkeys.first
-    value = redis.hget(key)
-    { key => value }
+    hash_all(key)
   end
 
   def self.hash_all(key)
@@ -31,7 +29,7 @@ class RedisCommand
   end
 
   def self.list(key)
-    redis.lrange key, 0, 1
+    list_all(key)
   end
 
   def self.list_all(key)
@@ -39,7 +37,7 @@ class RedisCommand
   end
 
   def self.set(key)
-    redis.smembers(key).first
+    redis.smembers(key).compact
   end
 
   def self.set_all(key)
@@ -47,13 +45,13 @@ class RedisCommand
   end
 
   def self.zset(key)
-    redis.zrange key, 0, 1
+    zset_all(key)
   end
 
   def self.zset_all(key)
     redis.zrange(key, 0, -1).collect do |value|
       score = redis.zscore(key, value)
-      { :value => value, :score => score }
+      { "value" => value, "score" => score }
     end
   end
 
@@ -63,5 +61,9 @@ class RedisCommand
 
   def self.string_all(key)
     redis.get key
+  end
+
+  def self.info
+    redis.info
   end
 end

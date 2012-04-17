@@ -1,68 +1,46 @@
-%form{:action => '/search', :method => 'get'}
-  %input{:type => 'text', :name => 'q', :value => params['q']}
-  %input{:type => 'submit', :value => 'Search'}
-  = link_to '#', 'clear', 'clear'
 
-%form{:action => '/redis', :method => 'post'}
-  %input{:type => 'hidden', :name => '_method', :value => 'put'}
-  %label
-    Change Database
-    -selected = AppConfig::Redis.options[:db].to_i
-    %select{:name => 'db', :class => 'db'}
-      - 10.times do |i|
-        %option{:value => i, :selected => (selected == i)}= i
+#summary.well
+  .button-group
+    %ul.unstyled
+      %li
+        %p.title redis version
+        %p.value= RedisAbstractor.get_info("redis_version")
+      %li
+        %p.title uptime sec
+        %p.value= RedisAbstractor.get_info("uptime_in_seconds")
+      %li
+        %p.title memory
+        %p.value= RedisAbstractor.get_info("used_memory")
+      %li
+        %p.title clients
+        %p.value= RedisAbstractor.get_info("connected_clients")
 
-= link_to '#', 'live poll', 'poll'
+    %label
+      Change Database
+      %select{:name => 'db_selector', :id => 'db_selector'}
+        - selected = AppConfig::Redis.options[:db]
+        - RedisAbstractor.databases.each do |db, meta|
+          %option{:value => db, :selected => (selected == db)}= database_description(db, meta)
 
-#spinner
+%table.table.table-bordered
+  %thead
+    %tr
+      %th
+      %th key
+      %th type
+      %th ttl
+      %th value
+  %tbody
+    - RedisAbstractor.dump.each do |record|
+      %tr
+        %td
+          %a.delete_record{ :href => "#", "data-key" => record['key'], :class => 'btn btn-mini btn-danger'} X
+        %td= record['key']
+        %td= record['type']
+        %td= record['ttl']
+        %td
+          %pre.prettyprint.pre-scrollable= format_code(record['value'])
 
-#redis
-  .redis_header.row
-    .actions
-    .key Key
-    .type Type
-    .ttl TTL
-    .values Value
-
-.templates{:style => 'display: none;'}
-  %script#row_template{:type => 'text/x-jquery-tmpl'}
-    .row{'data-key' => '${key}'}
-      .actions
-        = link_to('/redis/${key}', image_tag('delete_small.png'), 'delete', 'delete')
-        = link_to('#', image_tag('collapsed.png'), 'toggle_expand', 'expand')
-      .key
-        = "${key}"
-      .type
-        = "${type}"
-      .ttl
-        = "${ttl}"
-      .values
-        = "${value}"
-  -# .string
-  %script#list_template{:type => 'text/x-jquery-templ'}
-    ="{{each value}}"
-    .value
-      ="${$value}"
-    ="{{/each}}"
-
-  %script#set_template{:type => 'text/x-jquery-templ'}
-    ="{{each value}}"
-    .value
-      ="${$value}"
-    ="{{/each}}"
-
-  %script#zset_template{:type => 'text/x-jquery-templ'}
-    ="{{each value}}"
-    .value{:title => "${$value.score}"}
-      ="${$value.value}"
-    ="{{/each}}"
-
-  %script#hash_template{:type => 'text/x-jquery-templ'}
-    ="{{each value}}"
-    .value
-      ="${$value}"
-    ="{{/each}}"
-
-  %script#string_template{:type => 'text/x-jquery-templ'}
-    .value
-      ="${value}"
+.well
+  .button-group
+    %button#delete_all.btn.btn-danger Delete All Data

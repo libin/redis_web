@@ -22,9 +22,8 @@ Redis web displays the following data:
 
 Redis web also provides:
 
-* Searching
 * Deleting
-* Polling for real time updates.
+* Database Selection
 
 
 How do I use it?
@@ -40,7 +39,7 @@ Install dependencies:
 
 Run:
 
-    thin start
+    foreman start
 
 If you need to edit redis connection settings, check out `config/redis.yml`
 

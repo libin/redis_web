@@ -4,6 +4,9 @@ module AppConfig
   end
 
   class Redis
+    # this should match your config file; currently no way to query redis for this value
+    MAX_DATABASES = 16
+
     def self.options
       @options ||= {}
     end
