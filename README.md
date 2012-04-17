@@ -41,6 +41,10 @@ Run:
 
     foreman start
 
+Visit:
+
+    http://localhost:3075/
+
 If you need to edit redis connection settings, check out `config/redis.yml`
 
     host: localhost
