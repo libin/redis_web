@@ -27,6 +27,8 @@ module AppConfig
   if ENV['RUBY_ENV'] == 'test'
     Redis.options = {:host => 'localhost', :port => 6380}
   else
-    Redis.options = YAML::load(File.open(File.join(APP_ROOT, 'config', 'redis.yml')))
+    options = {}
+    YAML::load(File.open(File.join(APP_ROOT, 'config', 'redis.yml'))).each{|k, v| options[k.to_sym] = v}
+    Redis.options = options
   end
 end
